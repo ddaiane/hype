@@ -4,7 +4,7 @@ const { Sequelize } = require("sequelize");
 
 //postgres://usuario:senha@servidor:porta/banco
 const sequelize = new Sequelize(
-  process.env.PG_STRING,
+  process.env.DATABASE_URL,
   { dialect: "postgres" }
 );
 
