@@ -4,8 +4,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 //rotas para variaveis
+var prediosRouter = require('./routes/prediosRoutes');
+var apartamentosRouter = require('./routes/apartamentosRoutes');
+
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -22,7 +24,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //aponta rotas
+app.use('/api/predios', prediosRouter);
+app.use('/api/apartamentos', apartamentosRouter);
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 module.exports = app;
