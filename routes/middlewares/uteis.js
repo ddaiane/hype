@@ -34,8 +34,23 @@ async function verificaPredioVazio(sigla) { //verifica se nao tem apartamentos l
     return false;
 }
 
+async function verificaCodigoNoPredio(sigla, codigo) { //verifica se codigo existe em um determinado predio
+    const resultado = await db.query(
+        `SELECT COUNT(1)
+        FROM apartamentos
+        WHERE predio = '${sigla}' AND codigo = '${codigo}'`, {
+            type: QueryTypes.SELECT
+        }
+    );
+    if (resultado[0]["count"] == 0) {
+        return false;
+    }
+    return true;
+}
+
 
 module.exports = {
     verificaSigla,
-    verificaPredioVazio
+    verificaPredioVazio,
+    verificaCodigoNoPredio
 };

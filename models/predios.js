@@ -27,10 +27,10 @@ async function getPredios(req, res) {
 //detalhes de um predio especifico
 async function getPredio(req, res) {
     try {
-        const {
+        let {
             sigla
         } = req.params;
-
+        sigla = sigla.toUpperCase();
         const predios = await db.query(
             `SELECT * FROM predios WHERE sigla = '${sigla}' `, {
                 type: QueryTypes.SELECT
@@ -50,10 +50,10 @@ async function getPredio(req, res) {
 //deleta um predio
 async function deletePredio(req, res) {
     try {
-        const {
+        let {
             sigla
         } = req.params;
-
+        sigla = sigla.toUpperCase();
         const query = await db.query(
             `DELETE FROM predios WHERE sigla='${sigla}' RETURNING *`, {
                 type: QueryTypes.DELETE,
@@ -73,7 +73,7 @@ async function deletePredio(req, res) {
 //cria um predio
 async function criaPredio(req, res) {
     try {
-        const {
+        let {
             sigla,
             nome,
             endereco,
@@ -81,7 +81,7 @@ async function criaPredio(req, res) {
             estado,
             apartamentos
         } = req.body;
-
+        sigla = sigla.toUpperCase();
         //Verificação se todos os campos estão presentes, mensagem para o front
         if (!sigla || !nome || !endereco || !cidade || !estado || !apartamentos) {
             return res.status(400).json({
