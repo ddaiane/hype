@@ -15,7 +15,7 @@ var app = express();
 
 //inicia tabelas do banco e algumas entradas para testes
 const initSQL = require('./DB/init');
-app.use(cors());
+app.use(cors()); //permite cross-origin
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
