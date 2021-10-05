@@ -8,8 +8,6 @@ var cors = require("cors");
 var prediosRouter = require('./routes/prediosRoutes');
 var apartamentosRouter = require('./routes/apartamentosRoutes');
 
-var indexRouter = require('./routes/index');
-
 var app = express();
 
 
@@ -22,12 +20,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 //serve os arquivos estaticos
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public', 'build')));
 
 //aponta rotas
 app.use('/api/predios', prediosRouter);
 app.use('/api/apartamentos', apartamentosRouter);
 
-app.use('/', indexRouter);
+//entrega paginas
+var indexPath = __dirname + "/public/build/index.html";
+app.get("*", function(req, res) {
+   res.sendFile(indexPath);
+ });
 
 module.exports = app;
