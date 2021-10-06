@@ -13,7 +13,7 @@ async function siglaValida(req, res, next) {
             next();
         } else {
             res.status(400).json({
-                message: "Sigla inexistente"
+                message: "Sigla de prédio informada não existe"
             }); //se sigla nao existir, devolve ja no middleware
         }
     } catch (error) {
@@ -46,7 +46,6 @@ async function codigoExisteNoPredio(req, res, next) {
         if (await verificaCodigoNoPredio(sigla, codigo)) {
             next();
         } else {
-            console.log("else")
             res.status(400).json({
                 message: "Apartamento não existe no prédio informado"
             });

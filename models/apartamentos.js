@@ -21,7 +21,7 @@ async function getApartamentos(req, res) {
     } catch (error) {
         res.status(404).json({
             error: true,
-            message: error.message
+            message: "erro desconhecido"
         });
     }
 }
@@ -44,7 +44,7 @@ async function getApartamentosPredio(req, res) {
     } catch (error) {
         res.status(404).json({
             error: true,
-            message: error.message
+            message: "erro desconhecido"
         });
 
     }
@@ -69,7 +69,7 @@ async function getApartamento(req, res) {
     } catch (error) {
         res.status(404).json({
             error: true,
-            message: error.message
+            message: "erro desconhecido"
         });
 
     }
@@ -93,7 +93,7 @@ async function deleteApartamento(req, res) {
     } catch (error) {
         res.status(404).json({
             error: true,
-            message: error.message
+            message: "erro desconhecido"
         });
     }
 }
@@ -127,9 +127,9 @@ async function criaApartamento(req, res) {
         }
 
         //Verificação se valores tao dentro do exigido
-        if (quartos < 0 || banheiros < 0 || suites < 0 || area_total <= 1) {
+        if (parseInt(quartos) < 0 || parseInt(banheiros) < 0 || parseInt(suites) < 0 || parseInt(area_total) <= 1) {
             return res.status(400).json({
-                message: "Valores incorretos",
+                message: "Valores inválidos",
             });
         }
 
@@ -144,7 +144,7 @@ async function criaApartamento(req, res) {
     } catch (error) {
         res.status(404).json({
             error: true,
-            message: error.message
+            message: "erro desconhecido"
         });
     }
 }

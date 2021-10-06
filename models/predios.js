@@ -19,7 +19,7 @@ async function getPredios(req, res) {
     } catch (error) {
         res.status(404).json({
             error: true,
-            message: error.message
+            message: "erro desconhecido"
         });
     }
 }
@@ -41,7 +41,7 @@ async function getPredio(req, res) {
     } catch (error) {
         res.status(404).json({
             error: true,
-            message: error.message
+            message: "erro desconhecido"
         });
 
     }
@@ -63,7 +63,7 @@ async function deletePredio(req, res) {
     } catch (error) {
         res.status(404).json({
             error: true,
-            message: error.message
+            message: "erro desconhecido"
         });
 
     }
@@ -95,7 +95,7 @@ async function criaPredio(req, res) {
             });
         }
 
-        if (apartamentos < 0) { //verifica se é positivo o numero de apartamentos
+        if (parseInt(apartamentos) < 0) { //verifica se é positivo o numero de apartamentos
             return res.status(400).json({
                 message: "Informe o valor correto de apartamentos",
             });
@@ -112,7 +112,7 @@ async function criaPredio(req, res) {
     } catch (error) {
         res.status(404).json({
             error: true,
-            message: error.message
+            message: "erro desconhecido"
         });
     }
 }
