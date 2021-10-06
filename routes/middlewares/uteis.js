@@ -48,9 +48,33 @@ async function verificaCodigoNoPredio(sigla, codigo) { //verifica se codigo exis
     return true;
 }
 
+async function verificaQuantidadeApartamentos(sigla) { //verifica se ainda tem vaga pra criar apartamento no predio
+    let unidadesPermitidas = await db.query(
+        `SELECT apartamentos from predios where sigla = '${sigla}'`, {
+            type: QueryTypes.SELECT
+        }
+    )
+    unidadesPermitidas = unidadesPermitidas[0].apartamentos;
+    
+    let unidadesExistentes = await db.query(
+        `SELECT COUNT(*) from apartamentos where predio = '${sigla}'`, {
+            type: QueryTypes.SELECT
+        }
+    )
+    unidadesExistentes = parseInt(unidadesExistentes[0].count);
+        
+    if(unidadesExistentes < unidadesPermitidas) {
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
 
 module.exports = {
     verificaSigla,
     verificaPredioVazio,
-    verificaCodigoNoPredio
+    verificaCodigoNoPredio,
+    verificaQuantidadeApartamentos
 };

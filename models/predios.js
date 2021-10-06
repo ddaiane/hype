@@ -10,7 +10,7 @@ const {
 async function getPredios(req, res) {
     try {
         const predios = await db.query(
-            `SELECT * FROM predios`, {
+            `SELECT * FROM predios ORDER BY nome`, {
                 type: QueryTypes.SELECT
             }
         );

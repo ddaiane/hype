@@ -4,7 +4,8 @@ const {
 const db = require("../DB/db");
 
 const {
-    verificaCodigoNoPredio
+    verificaCodigoNoPredio,
+    verificaQuantidadeApartamentos
 } = require("../routes/middlewares/uteis");
 
 
@@ -35,7 +36,7 @@ async function getApartamentosPredio(req, res) {
         } = req.params;
         sigla = sigla.toUpperCase();
         const apartamentos = await db.query(
-            `SELECT * FROM apartamentos WHERE predio = '${sigla}' `, {
+            `SELECT * FROM apartamentos WHERE predio = '${sigla}' ORDER BY codigo`, {
                 type: QueryTypes.SELECT
             }
         );
@@ -132,6 +133,14 @@ async function criaApartamento(req, res) {
                 message: "Valores inválidos",
             });
         }
+
+        //verifica limite de apartamentos no predio
+        if(await verificaQuantidadeApartamentos(sigla) == false) {
+            return res.status(400).json({
+                message: "Já foram cadastradas todas as unidades deste prédio",
+            });
+        }
+        
 
         const resultado = await db.query(
             `INSERT INTO apartamentos  VALUES('${codigo}', ${quartos}, ${banheiros}, ${suites}, ${area_total}, '${sigla}') RETURNING *`, {
