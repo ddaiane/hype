@@ -76,6 +76,26 @@ async function getApartamento(req, res) {
     }
 }
 
+//retorna quantos apartamentos tem cadastrados em cada prédio
+async function calculaApartamentos(req, res) {
+    try {
+        const {sigla} = req.params;
+
+        const unidadesCadastradas = await db.query(
+            `SELECT COUNT(*) FROM apartamentos WHERE predio = '${sigla}'`, {
+                type: QueryTypes.SELECT
+            }
+        );
+        res.status(200).json(unidadesCadastradas[0].count);
+        
+    } catch (error) {
+        res.status(404).json({
+            error: true,
+            message: "erro desconhecido"
+        });
+    }
+}
+ 
 
 //deleta um apartamento
 async function deleteApartamento(req, res) {
@@ -163,6 +183,7 @@ module.exports = {
     getApartamentos,
     getApartamentosPredio,
     getApartamento,
+    calculaApartamentos,
     deleteApartamento,
     criaApartamento
 };
