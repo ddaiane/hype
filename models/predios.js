@@ -14,6 +14,27 @@ async function getPredios(req, res) {
                 type: QueryTypes.SELECT
             }
         );
+
+        //dados de quantos apartamentos tem cadastrados em cada predio
+        const unidadesCadastradas = await db.query(
+            `select COUNT(*), PREDIO from APARTAMENTOS GROUP BY PREDIO`, {
+                type: QueryTypes.SELECT
+            }
+        );
+            //adiciona as quantidades de apartamentos cadastrados no objeto de cada predio
+        predios.forEach(predio => {
+            for(let i= 0; i < unidadesCadastradas.length; i++) {
+                if(predio.sigla == unidadesCadastradas[i].predio) {
+                    predio["unidadesCadastradas"] = unidadesCadastradas[i].count;
+                    break;
+                }
+            }
+        }
+        )
+
+        console.log(predios);
+
+
         res.status(200).json(predios);
 
     } catch (error) {
